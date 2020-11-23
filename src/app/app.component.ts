@@ -1,4 +1,6 @@
-import { Component, ViewContainerRef, Inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { faBalanceScale, faChartPie } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,14 @@ import { Component, ViewContainerRef, Inject } from '@angular/core';
 })
 export class AppComponent {
   title = 'budget-banking-app';
+  faBalanceScale = faBalanceScale;
+  faChartPie = faChartPie;
+
+  constructor(private router: Router) {
+    
+  }
+
+  ngOnInit(): void {
+    this.router.navigate(['/home']);
+  }
 }

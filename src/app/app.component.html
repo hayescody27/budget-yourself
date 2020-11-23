@@ -1,1 +1,13 @@
+<mat-toolbar style="margin-bottom: 1rem;">
+    <span routerLink="/home">Budget Banking</span>
+    <span style="width: 2rem;"></span>
+    <span>
+        <button mat-button >Create New Budget <fa-icon [icon]="faBalanceScale"></fa-icon></button>
+        <button mat-button routerLink="/expense-history">New Expense History  <fa-icon [icon]="faChartPie"></fa-icon></button>
+    </span>
+    <span class="spacer"></span>
+    <span>
+        <button mat-button>Logout</button>
+    </span>
+</mat-toolbar>
 <router-outlet></router-outlet>
