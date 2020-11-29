@@ -3,7 +3,6 @@
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
-@import "./reset-src";
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -13,7 +12,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$budget-banking-app-primary: mat-palette($mat-indigo);
+$budget-banking-app-primary: mat-palette($mat-blue);
 $budget-banking-app-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -21,7 +20,15 @@ $budget-banking-app-warn: mat-palette($mat-red);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$budget-banking-app-theme: mat-light-theme((
+$budget-banking-app-theme-light: mat-light-theme((
+  color: (
+    primary: $budget-banking-app-primary,
+    accent: $budget-banking-app-accent,
+    warn: $budget-banking-app-warn,
+  )
+));
+
+$budget-banking-app-theme-dark: mat-dark-theme((
   color: (
     primary: $budget-banking-app-primary,
     accent: $budget-banking-app-accent,
@@ -32,15 +39,31 @@ $budget-banking-app-theme: mat-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($budget-banking-app-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.theme-light {
+  @include angular-material-theme($budget-banking-app-theme-light);
+}
+
+.theme-dark {
+  @include angular-material-theme($budget-banking-app-theme-dark);
+}
+
 .center {
   display: flex;
   justify-content: center;
+}
+
+.mat-grid-tile .mat-figure {
+  align-items: start !important;
+  justify-content: start !important;
+}
+
+.padding-10 {
+  padding: 10px;
 }
 

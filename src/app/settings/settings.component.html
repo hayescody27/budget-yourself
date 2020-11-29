@@ -1,0 +1,16 @@
+<div class="padding-10">
+    <mat-card>
+        <div class="mat-h1">
+            Settings
+        </div>
+        <section>
+            <mat-slide-toggle #darkMode color="primary" (change)="onDarkModeToggle($event)">
+            </mat-slide-toggle>
+            &nbsp;
+            <fa-icon [icon]="faMoon"></fa-icon>
+            Dark Mode
+        </section>
+    </mat-card>
+</div>
+
+

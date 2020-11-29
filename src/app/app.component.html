@@ -1,13 +1,34 @@
-<mat-toolbar style="margin-bottom: 1rem;">
-    <span routerLink="/home">Budget Banking</span>
-    <span style="width: 2rem;"></span>
-    <span>
-        <button mat-button >Create New Budget <fa-icon [icon]="faBalanceScale"></fa-icon></button>
-        <button mat-button routerLink="/expense-history">New Expense History  <fa-icon [icon]="faChartPie"></fa-icon></button>
-    </span>
-    <span class="spacer"></span>
-    <span>
-        <button mat-button>Logout</button>
-    </span>
-</mat-toolbar>
-<router-outlet></router-outlet>
+<mat-sidenav-container color="primary" (backdropClick)="sidenav.close()">
+    <mat-sidenav #sidenav fixedInViewport mode="push" (keydown.escape)="sidenav.close()" disableClose>
+        <mat-toolbar color="primary">
+            Navigation
+        </mat-toolbar>
+        <mat-nav-list>
+            <mat-list-item routerLink="/budget-wizard" (click)="sidenav.close()">
+                <fa-icon [icon]="faBalanceScale">
+                </fa-icon>&nbsp; Create New Budget
+            </mat-list-item>
+            <mat-list-item routerLink="/expense-history" (click)="sidenav.close()">
+                <fa-icon [icon]="faChartPie">
+
+                </fa-icon>&nbsp; New Expense History
+            </mat-list-item>
+            <mat-list-item routerLink="/settings" (click)="sidenav.close()" [ngClass]="posClass">
+                <fa-icon [icon]="faCogs"></fa-icon>&nbsp; Settings
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <button mat-button routerLink="/home" (click)="sidenav.close()">Budget Banking</button>
+            <span class="spacer"></span>
+            <span>
+                <button mat-button>Logout</button>
+            </span>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

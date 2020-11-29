@@ -1,17 +1,16 @@
-
-<div>
+<div class="padding-10">
     <div class="mat-h1 center">
         Expense History
     </div>
-</div>
-
-<div class="container">
     <div class="center">
         <div class="mat-body">
             Add expenses below
         </div>
     </div>
-    <div>
-        
-    </div>
+    <mat-grid-list cols="1" rowHeight="80px">
+        <mat-grid-tile *ngFor="let number of [0,1,2,3,4]">
+            <!--TODO Fix this width. It's hacky and not responsive..-->
+            <expense-row style="width: 25%;"></expense-row>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>
