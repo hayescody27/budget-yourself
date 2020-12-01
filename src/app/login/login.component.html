@@ -1,0 +1,30 @@
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <mat-card style="display: flex; align-items: center; flex-direction: column;" >
+        <mat-card-title>
+            Login
+        </mat-card-title>
+        <mat-card-content style="display: flex;">
+            <mat-divider>
+            </mat-divider>
+            <div style=" width: 200px; height: 200px; padding-right: 16px; display: flex; align-items: center; justify-content: center;">
+                <form [formGroup]="emailSignIn" style="text-align: center;" (ngSubmit)="auth.emailSignIn(emailSignIn.value)">
+                    <mat-form-field>
+                        <input type="email" matInput placeholder="example@domain.com" formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input type="password" matInput placeholder="password" formControlName="password">
+                    </mat-form-field>
+                    <div>
+                        <button mat-stroked-button type="submit" [disabled]="!emailSignIn.valid">Sign In</button>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <mat-divider vertical style="height: 200px;"></mat-divider>
+            </div>
+            <div style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
+                <button mat-stroked-button color-primary (click)="auth.googleSignIn()">Sign in with Google</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

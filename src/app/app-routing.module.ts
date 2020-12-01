@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BudgetWizardComponent } from './budget-wizard/budget-wizard/budget-wizard.component';
 import { ExpenseHistoryComponent } from './expense-history/expense-history.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [

@@ -8,6 +8,9 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -55,7 +58,18 @@ import { ExpenseRowComponent } from './expense-row/expense-row.component';
 import { HomeComponent } from './home/home.component';
 import { AppService } from './services/app-service.service';
 import { SettingsComponent } from './settings/settings.component';
+import { LoginComponent } from './login/login.component';
 
+var firebaseConfig = {
+  apiKey: "AIzaSyCVot6GdcAq_uM6QWT6oDz9G4-3ljlGWeE",
+  authDomain: "budget-yourself.firebaseapp.com",
+  databaseURL: "https://budget-yourself.firebaseio.com",
+  projectId: "budget-yourself",
+  storageBucket: "budget-yourself.appspot.com",
+  messagingSenderId: "425594484239",
+  appId: "1:425594484239:web:498b496c148926310f957a",
+  measurementId: "G-PMRQS4DBRB"
+};
 
 
 @NgModule({
@@ -66,7 +80,8 @@ import { SettingsComponent } from './settings/settings.component';
     ExpenseHistoryComponent,
     HomeComponent,
     BudgetWizardComponent,
-    SettingsComponent
+    SettingsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +132,10 @@ import { SettingsComponent } from './settings/settings.component';
     PortalModule,
     ScrollingModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,4 +1,4 @@
-<mat-sidenav-container color="primary" (backdropClick)="sidenav.close()">
+<mat-sidenav-container color="primary" (backdropClick)="sidenav.close()" *ngIf="loggedIn">
     <mat-sidenav #sidenav fixedInViewport mode="push" (keydown.escape)="sidenav.close()" disableClose>
         <mat-toolbar color="primary">
             Navigation
@@ -23,12 +23,16 @@
             <button mat-icon-button (click)="sidenav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <button mat-button routerLink="/home" (click)="sidenav.close()">Budget Banking</button>
+            <button mat-button routerLink="/home" (click)="sidenav.close()">Budget Yourself</button>
             <span class="spacer"></span>
             <span>
-                <button mat-button>Logout</button>
+                <button mat-button (click)="auth.signOut()">Logout</button>
             </span>
         </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
+
+<div *ngIf="!loggedIn">
+    <login></login>
+</div>
