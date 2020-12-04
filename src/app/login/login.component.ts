@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/auth/login-service.service';
 
 @Component({
@@ -10,16 +10,30 @@ import { LoginService } from '../services/auth/login-service.service';
 export class LoginComponent implements OnInit {
 
   emailSignIn: FormGroup;
+  emailSignUp: FormGroup;
 
   constructor(private fb: FormBuilder, public auth: LoginService) {
 
-   }
+  }
 
   ngOnInit(): void {
     this.emailSignIn = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required]
     })
+    this.emailSignUp = this.fb.group({
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', Validators.required],
+      confirmPassword: ['', [Validators.required, this.confirmPasswordValidator.bind(this)]]
+    })
+  }
+
+  confirmPasswordValidator(fieldControl: FormControl) {
+    if (this.emailSignUp) {
+      console.log(fieldControl.value);
+      console.log(this.emailSignUp.get('password').value);
+      return fieldControl.value === this.emailSignUp.get('password').value ? null : { error: 'Passwords do not match.' };
+    }
   }
 
 }

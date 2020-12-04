@@ -32,14 +32,36 @@ export class LoginService {
 
   async googleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    const cred = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserData(cred.user);
+    try {
+      const cred = await this.afAuth.signInWithPopup(provider);
+      return this.updateUserData(cred.user);
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+
   }
 
   async emailSignIn({ email, password }) {
-    const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
-    return this.updateUserData(cred.user);
+    try {
+      const cred = await this.afAuth.signInWithEmailAndPassword(email, password);
+      return this.updateUserData(cred.user);
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   }
+
+  async emailSignUp({ email, password }) {
+    try {
+      const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      return this.updateUserData(cred.user);
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  }
+
 
   async signOut() {
     await this.afAuth.signOut();
@@ -51,7 +73,7 @@ export class LoginService {
     let userData: User = <User>{};
     userData.uid = user.uid;
     userData.email = user.email;
-    userData.budgets = <Budget[]>[<Budget>{budgetName: '', budgetStatus: 0, budgetItems:[<BudgetItem>{description: '', amount: 0}]}];
+    userData.budgets = <Budget[]>[<Budget>{ budgetName: '', budgetStatus: 0, budgetItems: [<BudgetItem>{ description: '', amount: 0 }] }];
     userData.firstName = "Pending...";
     userData.lastName = "Pending...";
     return userRef.set(userData, { merge: true });

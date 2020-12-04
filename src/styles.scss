@@ -67,3 +67,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 10px;
 }
 
+.mat-tab-body-content {
+  overflow: hidden !important;
+}
