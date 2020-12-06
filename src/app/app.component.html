@@ -1,4 +1,4 @@
-<mat-sidenav-container color="primary" (backdropClick)="sidenav.close()" *ngIf="loggedIn">
+<mat-sidenav-container color="primary" (backdropClick)="sidenav.close()" *ngIf="loggedIn && completeProfile">
     <mat-sidenav #sidenav fixedInViewport mode="push" (keydown.escape)="sidenav.close()" disableClose>
         <mat-toolbar color="primary">
             Navigation
@@ -35,4 +35,8 @@
 
 <div *ngIf="!loggedIn">
     <login></login>
+</div>
+
+<div *ngIf="loggedIn && !completeProfile">
+    <profile-setup></profile-setup>
 </div>

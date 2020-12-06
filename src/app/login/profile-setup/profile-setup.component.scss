@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    padding: 10px;
+}
+
+.card {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+mat-form-field {
+    width: 80%;
+}
+
+mat-card-title {
+    width: 100%;
+}

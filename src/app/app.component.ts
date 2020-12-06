@@ -2,8 +2,9 @@ import { DOCUMENT } from '@angular/common';
 import { Component, HostListener, Inject, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { faBalanceScale, faChartPie, faCogs } from '@fortawesome/free-solid-svg-icons';
+import { tap } from 'rxjs/operators';
 import { LoginService } from './services/auth/login-service.service';
-import { ThemeSwitcherService } from './services/theme-switcher.service';
+import { ThemeSwitcherService } from './services/themes/theme-switcher.service';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,10 @@ export class AppComponent implements OnInit {
   // styling
   posClass;
 
-  loggedIn:boolean = false;
+  loggedIn: boolean = false;
+  completeProfile: boolean = true;
 
-@HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', ['$event'])
   getScreenHeight(event?) {
     if (window.innerHeight <= 412) {
       this.posClass = 'posRel';
@@ -42,17 +44,34 @@ export class AppComponent implements OnInit {
       this.setHostClass(savedTheme);
     }
 
-    auth.user$.subscribe(x => {
-      if (!x) {
-        this.loggedIn = false;
-      } else {
-        this.loggedIn = true;
-      }
-    })
+    auth.user$.pipe(
+      tap(user => {
+        if (user) {
+          if (!user.firstName || !user.lastName) {
+            this.completeProfile = false;
+          } else {
+            this.completeProfile = true;
+          }
+        }
+      })
+    ).subscribe();
+
+    auth.loggedIn$.pipe(
+      tap(l => {
+        console.log(l);
+        if (!l) {
+          this.loggedIn = false;
+          this.router.navigate(['']);
+        } else {
+          this.loggedIn = true;
+        }
+      })
+    ).subscribe();
+
   }
 
   ngOnInit(): void {
- 
+
   }
 
   switchMode(isDark: boolean) {

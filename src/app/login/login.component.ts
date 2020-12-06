@@ -30,8 +30,6 @@ export class LoginComponent implements OnInit {
 
   confirmPasswordValidator(fieldControl: FormControl) {
     if (this.emailSignUp) {
-      console.log(fieldControl.value);
-      console.log(this.emailSignUp.get('password').value);
       return fieldControl.value === this.emailSignUp.get('password').value ? null : { error: 'Passwords do not match.' };
     }
   }
