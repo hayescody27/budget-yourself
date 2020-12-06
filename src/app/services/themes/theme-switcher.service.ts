@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ThemeSwitcherService {
 
-  darkMode = new BehaviorSubject<boolean>(localStorage.getItem('theme') === 'theme-light' ? false : true);
+  darkMode = new BehaviorSubject<boolean>(localStorage.getItem('theme') === 'theme-dark' ? true : false);
 
   constructor() { }
 

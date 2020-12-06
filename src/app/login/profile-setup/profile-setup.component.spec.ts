@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExpenseRowComponent } from './expense-row.component';
+import { ProfileSetupComponent } from './profile-setup.component';
 
-describe('ExpenseRowComponent', () => {
-  let component: ExpenseRowComponent;
-  let fixture: ComponentFixture<ExpenseRowComponent>;
+describe('ProfileSetupComponent', () => {
+  let component: ProfileSetupComponent;
+  let fixture: ComponentFixture<ProfileSetupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExpenseRowComponent ]
+      declarations: [ ProfileSetupComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExpenseRowComponent);
+    fixture = TestBed.createComponent(ProfileSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

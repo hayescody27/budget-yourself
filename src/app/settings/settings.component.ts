@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { ThemeSwitcherService } from '../services/theme-switcher.service';
+import { ThemeSwitcherService } from '../services/themes/theme-switcher.service';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -14,7 +14,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('darkMode')
   darkModeToggle: MatSlideToggle;
 
-  constructor(private ts: ThemeSwitcherService) { 
+  constructor(private ts: ThemeSwitcherService) {
 
   }
 
@@ -27,7 +27,7 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  onDarkModeToggle({ checked }:MatSlideToggleChange) {
+  onDarkModeToggle({ checked }: MatSlideToggleChange) {
     this.ts.toggleDarkMode(checked);
   }
 

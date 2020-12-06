@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, pipe } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { FirebaseApp } from '@angular/fire';
 import firebase from 'firebase';
@@ -15,7 +15,8 @@ import { BudgetItem } from 'src/app/models/budget-item';
 })
 export class LoginService {
 
-  user$: Observable<any>
+  user$: Observable<any>;
+  loggedIn$: Observable<boolean>;
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private s: FirebaseApp) {
     this.user$ = this.afAuth.authState.pipe(
@@ -27,16 +28,31 @@ export class LoginService {
         }
       })
     )
+    this.loggedIn$ = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return of(true);
+        } else {
+          return of(false);
+        }
+      })
+    )
   }
 
+  async emailSignUp({ email, password }) {
+    try {
+      const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      this.initUser(cred.user);
+    } catch (error) {
+      alert(error);
+    }
+  }
 
   async googleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     try {
       const cred = await this.afAuth.signInWithPopup(provider);
-      return this.updateUserData(cred.user);
     } catch (error) {
-      console.log(error);
       alert(error);
     }
 
@@ -45,37 +61,19 @@ export class LoginService {
   async emailSignIn({ email, password }) {
     try {
       const cred = await this.afAuth.signInWithEmailAndPassword(email, password);
-      return this.updateUserData(cred.user);
     } catch (error) {
-      console.log(error);
       alert(error);
     }
   }
-
-  async emailSignUp({ email, password }) {
-    try {
-      const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      return this.updateUserData(cred.user);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
-  }
-
 
   async signOut() {
+    this.router.navigate(['']);
     await this.afAuth.signOut();
   }
 
-  updateUserData(user: firebase.User): Promise<void> {
-    debugger;
+  initUser(user: firebase.User) {
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
-    let userData: User = <User>{};
-    userData.uid = user.uid;
-    userData.email = user.email;
-    userData.budgets = <Budget[]>[<Budget>{ budgetName: '', budgetStatus: 0, budgetItems: [<BudgetItem>{ description: '', amount: 0 }] }];
-    userData.firstName = "Pending...";
-    userData.lastName = "Pending...";
-    return userRef.set(userData, { merge: true });
+    userRef.set(<User>{ uid: user.uid, email: user.email });
   }
+
 }

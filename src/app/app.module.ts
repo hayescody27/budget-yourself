@@ -53,12 +53,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BudgetWizardComponent } from './budget-wizard/budget-wizard/budget-wizard.component';
 import { ExpenseHistoryComponent } from './expense-history/expense-history.component';
-import { ExpenseRowContainerComponent } from './expense-row-container/expense-row-container.component';
-import { ExpenseRowComponent } from './expense-row/expense-row.component';
 import { HomeComponent } from './home/home.component';
 import { AppService } from './services/app-service.service';
 import { SettingsComponent } from './settings/settings.component';
 import { LoginComponent } from './login/login.component';
+import { ProfileSetupComponent } from './login/profile-setup/profile-setup.component';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCVot6GdcAq_uM6QWT6oDz9G4-3ljlGWeE",
@@ -75,13 +74,12 @@ var firebaseConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    ExpenseRowComponent,
-    ExpenseRowContainerComponent,
     ExpenseHistoryComponent,
     HomeComponent,
     BudgetWizardComponent,
     SettingsComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileSetupComponent
   ],
   imports: [
     BrowserModule,
