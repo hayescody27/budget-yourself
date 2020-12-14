@@ -1,7 +1,8 @@
 <div class="padding-10">
     <div *ngIf="mode == 'budgetSelect'">
         <div class="dynamicItemsContainer">
-            <budget-preview *ngFor="let budget of budgets.getValue()" [budget]="budget" (click)="loadBudget(budget)">
+            <budget-preview *ngFor="let budget of budgets.getValue()" [budget]="budget" [user]="user.getValue()"
+                (budgetSelected)="loadBudget(budget)">
             </budget-preview>
         </div>
     </div>
