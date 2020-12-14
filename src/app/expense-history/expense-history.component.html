@@ -1,0 +1,20 @@
+<div class="padding-10">
+    <div *ngIf="mode == 'budgetSelect'">
+        <div class="dynamicItemsContainer">
+            <budget-preview *ngFor="let budget of budgets.getValue()" [budget]="budget" (click)="loadBudget(budget)">
+            </budget-preview>
+        </div>
+    </div>
+    <div *ngIf="mode == 'expenseTracking'">
+        <div style="margin-bottom: 10px;">
+            <button mat-button (click)="mode = 'budgetSelect'">
+                <mat-icon>arrow_back</mat-icon>
+                Choose Another Budget
+            </button>
+        </div>
+        <div class="dynamicItemsContainer">
+            <expense-item *ngFor="let item of currentBudget.budgetItems; let i = index" [budgetItem]="item"
+                (onUpdateExpenseHistory)="updateExpenseHistory($event, i)"></expense-item>
+        </div>
+    </div>
+</div>

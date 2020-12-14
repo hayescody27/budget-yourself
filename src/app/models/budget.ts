@@ -4,5 +4,7 @@ export interface Budget {
     budgetItems: BudgetItem[];
     budgetName: string;
     budgetStatus: number;
+    budgetAmount: number;
+    id: string;
 
 }

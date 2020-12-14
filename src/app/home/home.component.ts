@@ -21,9 +21,15 @@ export class HomeComponent implements OnInit {
     })
 
 
-   }
+  }
 
   ngOnInit(): void {
+  }
+
+  getReference() {
+    this.auth.user$.subscribe(x => {
+      const userRef = this.db.doc(`users/${x.uid}`);
+    })
   }
 
 }

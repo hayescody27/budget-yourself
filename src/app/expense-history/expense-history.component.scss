@@ -1,0 +1,28 @@
+.card {
+    display: flex; 
+    align-items: center; 
+    flex-direction: column;
+    text-align: center;
+    width: 300px;
+    height: 150px;
+}
+
+.dynamicItemsContainer {
+    display: flex;
+    gap: 15px;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.snackSuccess {
+    background-color: #5cb85c; 
+}
+
+mat-form-field {
+    width: 80%;
+}
+
+expense-item {
+    flex: 1 0 500px;
+}
+

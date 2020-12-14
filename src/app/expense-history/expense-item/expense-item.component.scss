@@ -1,0 +1,27 @@
+.cardScroll {
+    max-height: 300px; 
+    overflow-y: auto;
+}
+
+.cardScroll::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+.cardScroll::-webkit-scrollbar-track {
+box-shadow: inset 0 0 6px white;
+border-radius: 10px;
+}
+
+.cardScroll::-webkit-scrollbar-thumb {
+border-radius: 10px;
+box-shadow: inset 0 0 6px slategray;
+}
+
+.form-container .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+
+mat-card {
+    // 32 px to offset the padding that the mat-card has
+    height: calc(100% - 32px);
+}

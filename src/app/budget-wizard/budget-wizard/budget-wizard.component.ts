@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { User } from 'src/app/models/user';
+import { LoginService } from 'src/app/services/auth/login-service.service';
 import { BudgetStep } from '../budget-steps.enum';
+import firestore from 'firebase';
+import { Budget } from 'src/app/models/budget';
 
 @Component({
   selector: 'budget-wizard',
@@ -12,6 +18,7 @@ import { BudgetStep } from '../budget-steps.enum';
 export class BudgetWizardComponent implements OnInit {
 
   wizardStep: BudgetStep = BudgetStep.MonthlyIncome;
+  budgetNameGroup: FormGroup;
   monthlyIncomeGroup: FormGroup;
   addItemsGroup: FormGroup;
   remainingBudget = new Subject<number>();
@@ -20,40 +27,49 @@ export class BudgetWizardComponent implements OnInit {
   reviewColumns: string[] = ['description', 'amount'];
   reviewDataSource = [];
 
-  constructor(private fb: FormBuilder, private sb: MatSnackBar) {
+  constructor(private fb: FormBuilder, private sb: MatSnackBar, private db: AngularFirestore, private auth: LoginService) {
     this.remainingBudget.subscribe(rem => {
       if (rem < 0) {
-        this.remainingBudgetStyle = {'color' : 'red'};
+        this.remainingBudgetStyle = { 'color': 'red' };
       } else {
         this.remainingBudgetStyle = {};
       }
     })
-   }
+  }
 
   ngOnInit(): void {
+    this.budgetNameGroup = this.fb.group({
+      budgetName: ['', Validators.required]
+    })
     this.monthlyIncomeGroup = this.fb.group({
-      monthlyIncomeControl: ['', Validators.required]
+      monthlyIncome: ['', Validators.required]
     });
     this.addItemsGroup = this.fb.group({
-      addItemRows: this.fb.array([this.fb.group({description: ['', Validators.required], amount: [0, [Validators.required, Validators.min(0)]]})]) 
+      addItemRows: this.fb.array([])
     })
     this.addItemRows.valueChanges.subscribe((value: any[]) => {
-      this.remainingBudget.next(this.monthlyIncomeGroup.value.monthlyIncomeControl - value.map(x => x.amount).reduce((a, b) => a + b, 0));
+      this.remainingBudget.next(this.monthlyIncomeGroup.value.monthlyIncome - value.map(x => x.amount).reduce((a, b) => a + b, 0));
       this.reviewDataSource = value;
-      console.log(this.reviewDataSource)
     });
-    this.monthlyIncomeGroup.controls['monthlyIncomeControl'].valueChanges.subscribe(monthlyIncome => {
+    this.monthlyIncomeGroup.controls['monthlyIncome'].valueChanges.subscribe(monthlyIncome => {
       this.remainingBudget.next(monthlyIncome - this.addItemRows.value.map(x => x.amount).reduce((a, b) => a + b, 0));
     })
+  }
+
+  ngAfterViewInit(): void {
+    for (let i = 0; i < 5; i++) {
+      this.addBudgetRow(i - 1);
+    }
+
   }
 
   get addItemRows() {
     return this.addItemsGroup.get('addItemRows') as FormArray;
   }
 
-  addBudgetRow() {
-    let row = this.fb.group({description: ['', Validators.required], amount: [0, [Validators.required, Validators.min(0)]]});
-    this.addItemRows.push(row);
+  addBudgetRow(i) {
+    let row = this.fb.group({ description: ['', Validators.required], amount: [0, [Validators.required, Validators.min(0)]] });
+    this.addItemRows.insert(i + 1, row);
   }
 
   deleteBudgetRow(i) {
@@ -70,13 +86,37 @@ export class BudgetWizardComponent implements OnInit {
 
   resetBudgetRows() {
     this.addItemRows.clear();
-    this.addBudgetRow();
+    this.addBudgetRow(1);
     this.monthlyIncomeGroup.controls
   }
 
   submitNewBudget() {
-    console.log(this.monthlyIncomeGroup.value);
-    console.log(this.addItemsGroup.value);
+
+    let budget: Budget = <Budget>{
+      budgetAmount: this.monthlyIncome,
+      budgetItems: this.budgetItems,
+      budgetName: this.budgetName,
+      budgetStatus: 1
+    }
+
+    this.auth.user$.pipe(
+      take(1)
+    ).subscribe(x => {
+      const userRef = this.db.doc(`users/${x.uid}`).collection('budgets');
+      userRef.add(budget);
+    });
+  }
+
+  get budgetName() {
+    return this.budgetNameGroup.get('budgetName').value;
+  }
+
+  get monthlyIncome() {
+    return this.monthlyIncomeGroup.get('monthlyIncome').value;
+  }
+
+  get budgetItems() {
+    return this.addItemsGroup.get('addItemRows').value;
   }
 
 }

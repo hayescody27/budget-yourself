@@ -30,7 +30,6 @@ export class ProfileSetupComponent implements OnInit {
     this.auth.user$.pipe(
       take(1)
     ).subscribe(x => {
-      console.log('take 1');
       const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${x.uid}`);
       userRef.update(<User>{ firstName: this.profileSetup.get('firstName').value, lastName: this.profileSetup.get('lastName').value });
     });
