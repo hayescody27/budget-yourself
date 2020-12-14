@@ -105,6 +105,7 @@ export class BudgetWizardComponent implements OnInit {
       const userRef = this.db.doc(`users/${x.uid}`).collection('budgets');
       userRef.add(budget);
     });
+    this.sb.open('Budget Created!', '', { duration: 1000, verticalPosition: 'top' });
   }
 
   get budgetName() {

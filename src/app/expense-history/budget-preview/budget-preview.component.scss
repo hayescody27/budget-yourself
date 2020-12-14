@@ -1,4 +1,10 @@
-button {
+.budgetPreviewContainer {
     height: 300px;
     width: 300px;
+    text-align: center;
+}
+
+.budgetPreviewContainer > button {
+    width: 100%;
+    height: 50%;
 }

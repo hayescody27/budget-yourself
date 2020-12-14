@@ -54,4 +54,11 @@ export class ExpenseHistoryComponent implements OnInit {
     this.sb.open('Successfully updated!', '', { verticalPosition: "top", duration: 1000 })
   }
 
+  budgetDeleted() {
+    setTimeout(() => {
+      this.mode = 'budgetSelect';
+    }, 500);
+    console.log('mode changed');
+  }
+
 }

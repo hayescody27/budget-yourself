@@ -62,6 +62,7 @@ import { StepperWrapperComponent } from './components/stepper-wrapper/stepper-wr
 import { StepperStepComponent } from './components/stepper-step/stepper-step.component';
 import { ExpenseItemComponent } from './expense-history/expense-item/expense-item.component';
 import { BudgetPreviewComponent } from './expense-history/budget-preview/budget-preview.component';
+import { ConfirmDeleteSnackbarComponent } from './expense-history/confirm-delete-snackbar/confirm-delete-snackbar.component';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCVot6GdcAq_uM6QWT6oDz9G4-3ljlGWeE",
@@ -87,7 +88,8 @@ var firebaseConfig = {
     StepperWrapperComponent,
     StepperStepComponent,
     ExpenseItemComponent,
-    BudgetPreviewComponent
+    BudgetPreviewComponent,
+    ConfirmDeleteSnackbarComponent
   ],
   imports: [
     BrowserModule,
