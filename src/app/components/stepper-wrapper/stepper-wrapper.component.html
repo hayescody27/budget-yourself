@@ -1,0 +1,29 @@
+<ng-container *ngTemplateOutlet="template"></ng-container>
+
+<ng-template #horizontal>
+    <mat-horizontal-stepper #stepper [linear]="isLinear" (selectionChange)="selectionChanged($event)">
+        <mat-step *ngFor="let step of steps; let i = index" [stepControl]="step.form" [label]="step.label"
+            [optional]="step.isOptional">
+            <ng-container *ngTemplateOutlet="step.template"></ng-container>
+            <div class="actions">
+                <button *ngIf="i > 0" type="button" mat-button matStepperPrevious>Previous</button>
+                <button type="button" mat-button color="primary" matStepperNext
+                    (click)="step.submit()">{{i === steps.length - 1 ? 'Finish' : 'Next'}}</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</ng-template>
+
+<ng-template #vertical>
+    <mat-vertical-stepper #stepper [linear]="isLinear" (selectionChange)="selectionChanged($event)">
+        <mat-step *ngFor="let step of steps; let i = index" [stepControl]="step.form" [label]="step.label"
+            [optional]="step.isOptional">
+            <ng-container *ngTemplateOutlet="step.template"></ng-container>
+            <div class="actions">
+                <button *ngIf="i > 0" type="button" mat-button matStepperPrevious>Previous</button>
+                <button type="button" mat-button color="primary" matStepperNext
+                    (click)="step.submit()">{{i === steps.length - 1 ? 'Finish' : 'Next'}}</button>
+            </div>
+        </mat-step>
+    </mat-vertical-stepper>
+</ng-template>

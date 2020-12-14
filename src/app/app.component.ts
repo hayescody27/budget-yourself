@@ -58,7 +58,6 @@ export class AppComponent implements OnInit {
 
     auth.loggedIn$.pipe(
       tap(l => {
-        console.log(l);
         if (!l) {
           this.loggedIn = false;
           this.router.navigate(['']);

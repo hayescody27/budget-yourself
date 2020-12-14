@@ -1,0 +1,40 @@
+<mat-card class="card mat-elevation-z3">
+    <mat-card-title>
+        {{budgetItem.description}}
+        <span [ngStyle]="remainingBudgetStyle">({{remainingBudget | async | currency}})
+        </span>
+    </mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="expenseItemsForm" (ngSubmit)="updateExpenseHistory()" class="form-container">
+            <div #scrollContainer class="cardScroll">
+                <div formArrayName="expenseItemFormArray">
+                    <div *ngFor="let item of expenseItemFormArray.controls; let i = index;" [formGroupName]="i"
+                        class="horizontalForm">
+                        <mat-form-field>
+                            <mat-label>
+                                Description
+                            </mat-label>
+                            <input type="text" matInput placeholder="Description" formControlName="description">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Amount</mat-label>
+                            <span matPrefix>$&nbsp;</span>
+                            <input type="number" matInput placeholder="Amount" formControlName="amount">
+                        </mat-form-field>
+                        <button mat-icon-button (click)="deleteItemRow(i)">
+                            <mat-icon style="color:#f44336;">remove</mat-icon>
+                        </button>
+                        <button *ngIf="i == expenseItemFormArray.length - 1" mat-icon-button
+                            (click)="addExpenseItemRowAtIndex(i)">
+                            <mat-icon style="color:#5cb85c;">add</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!expenseItemsForm.valid || !expenseItemsForm.dirty">
+                    Save
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

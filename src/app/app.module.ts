@@ -58,6 +58,10 @@ import { AppService } from './services/app-service.service';
 import { SettingsComponent } from './settings/settings.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileSetupComponent } from './login/profile-setup/profile-setup.component';
+import { StepperWrapperComponent } from './components/stepper-wrapper/stepper-wrapper.component';
+import { StepperStepComponent } from './components/stepper-step/stepper-step.component';
+import { ExpenseItemComponent } from './expense-history/expense-item/expense-item.component';
+import { BudgetPreviewComponent } from './expense-history/budget-preview/budget-preview.component';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCVot6GdcAq_uM6QWT6oDz9G4-3ljlGWeE",
@@ -79,7 +83,11 @@ var firebaseConfig = {
     BudgetWizardComponent,
     SettingsComponent,
     LoginComponent,
-    ProfileSetupComponent
+    ProfileSetupComponent,
+    StepperWrapperComponent,
+    StepperStepComponent,
+    ExpenseItemComponent,
+    BudgetPreviewComponent
   ],
   imports: [
     BrowserModule,

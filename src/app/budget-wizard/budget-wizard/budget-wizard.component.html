@@ -1,24 +1,29 @@
 <div class="padding-10">
     <div class="mat-h1 center">Create your budget</div>
 
-    <mat-horizontal-stepper [linear]="true" #stepper>
-        <mat-step [stepControl]="monthlyIncomeGroup" label="Enter your monthly income">
+    <stepper-wrapper>
+        <stepper-step label="Name your budget" [form]="budgetNameGroup">
+            <form [formGroup]="budgetNameGroup">
+                <mat-form-field>
+                    <mat-label>Budget Name</mat-label>
+                    <input matInput type="text" placeholder="Ex. Monthly Budget" formControlName="budgetName">
+                </mat-form-field>
+            </form>
+        </stepper-step>
+        <stepper-step label="Enter your monthly income" [form]="monthlyIncomeGroup">
             <form [formGroup]="monthlyIncomeGroup">
                 <mat-form-field>
                     <mat-label>Monthly income</mat-label>
                     <span matPrefix>$&nbsp;</span>
                     <input matInput cdkFocusInitial type="number" placeholder="Monthly income"
-                        formControlName="monthlyIncomeControl">
+                        formControlName="monthlyIncome">
                 </mat-form-field>
-                <div>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
             </form>
-        </mat-step>
-        <mat-step [stepControl]="addItemsGroup" label="Add budget items">
+        </stepper-step>
+        <stepper-step label="Add budget items" [form]="addItemsGroup">
             <div class="center mat-h1">
                 <div class="budget-display">
-                    Initial Budget: {{monthlyIncomeGroup.value.monthlyIncomeControl | currency}}
+                    Initial Budget: {{monthlyIncomeGroup.value.monthlyIncome | currency}}
                 </div>
                 <div class="budget-display">
                     Remaining Budget:
@@ -40,16 +45,16 @@
                             <input type="number" matInput placeholder="Amount" formControlName="amount">
                         </mat-form-field>
                         <button mat-icon-button (click)="deleteBudgetRow(i)">
-                            <mat-icon>close</mat-icon>
+                            <mat-icon style="color: red;">remove</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="addBudgetRow(i)">
+                            <mat-icon style="color: green;">add</mat-icon>
                         </button>
                     </div>
                 </div>
-                <button mat-button matStepperPrevious>Prev</button>
-                <button mat-button matStepperNext>Next</button>
-                <button mat-button (click)="addBudgetRow()">Add Item</button>
             </form>
-        </mat-step>
-        <mat-step label="Review and Complete!">
+        </stepper-step>
+        <stepper-step label="Review and Complete!" (formSubmitted)="submitNewBudget()">
             <table mat-table [dataSource]="reviewDataSource" class="mat-elevation-z8" style="width: 50%; margin: auto;">
                 <ng-container matColumnDef="description">
                     <th mat-header-cell *matHeaderCellDef> Description </th>
@@ -64,11 +69,6 @@
                 <tr mat-header-row *matHeaderRowDef="reviewColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: reviewColumns;"></tr>
             </table>
-            <div class="review-buttons">
-                <button mat-button matStepperPrevious>Prev</button>
-                <button mat-button (click)="stepper.reset(); resetBudgetRows()">Reset</button>
-                <button mat-button (click)="submitNewBudget()">Looks good!</button>
-            </div>
-        </mat-step>
-    </mat-horizontal-stepper>
+        </stepper-step>
+    </stepper-wrapper>
 </div>
