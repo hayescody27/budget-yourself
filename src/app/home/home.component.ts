@@ -10,26 +10,12 @@ import { LoginService } from '../services/auth/login-service.service';
 })
 export class HomeComponent implements OnInit {
 
-  fbCollection;
-
-  constructor(private db: AngularFirestore, private auth: LoginService) {
-
-    auth.user$.subscribe(x => {
-      let ds = this.db.doc(`users/${x.uid}`).get().subscribe(x => {
-        this.fbCollection = x.data();
-      });
-    })
-
+  constructor() {
 
   }
 
   ngOnInit(): void {
   }
 
-  getReference() {
-    this.auth.user$.subscribe(x => {
-      const userRef = this.db.doc(`users/${x.uid}`);
-    })
-  }
 
 }
