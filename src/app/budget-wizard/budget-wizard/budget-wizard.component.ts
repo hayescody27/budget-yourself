@@ -9,6 +9,7 @@ import { LoginService } from 'src/app/services/auth/login-service.service';
 import { BudgetStep } from '../budget-steps.enum';
 import firestore from 'firebase';
 import { Budget } from 'src/app/models/budget';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'budget-wizard',
@@ -27,7 +28,7 @@ export class BudgetWizardComponent implements OnInit {
   reviewColumns: string[] = ['description', 'amount'];
   reviewDataSource = [];
 
-  constructor(private fb: FormBuilder, private sb: MatSnackBar, private db: AngularFirestore, private auth: LoginService) {
+  constructor(private fb: FormBuilder, private sb: MatSnackBar, private db: AngularFirestore, private auth: LoginService, private router: Router) {
     this.remainingBudget.subscribe(rem => {
       if (rem < 0) {
         this.remainingBudgetStyle = { 'color': 'red' };
@@ -106,6 +107,7 @@ export class BudgetWizardComponent implements OnInit {
       userRef.add(budget);
     });
     this.sb.open('Budget Created!', '', { duration: 1000, verticalPosition: 'top' });
+    this.router.navigate(['/expense-history']);
   }
 
   get budgetName() {

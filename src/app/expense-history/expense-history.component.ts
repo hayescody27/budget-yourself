@@ -58,7 +58,6 @@ export class ExpenseHistoryComponent implements OnInit {
     setTimeout(() => {
       this.mode = 'budgetSelect';
     }, 500);
-    console.log('mode changed');
   }
 
 }

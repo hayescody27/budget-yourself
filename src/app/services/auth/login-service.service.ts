@@ -22,7 +22,8 @@ export class LoginService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          return this.db.doc(`users/${user.uid}`).valueChanges();
+          let ret = this.db.doc(`users/${user.uid}`).valueChanges();
+          return ret;
         } else {
           return of(null);
         }
@@ -52,6 +53,7 @@ export class LoginService {
     const provider = new firebase.auth.GoogleAuthProvider();
     try {
       const cred = await this.afAuth.signInWithPopup(provider);
+      this.initUser(cred.user);
     } catch (error) {
       alert(error);
     }
@@ -73,7 +75,12 @@ export class LoginService {
 
   initUser(user: firebase.User) {
     const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
-    userRef.set(<User>{ uid: user.uid, email: user.email });
+    console.log(userRef);
+    userRef.snapshotChanges().subscribe(s => {
+      if (!s.payload.exists) {
+        userRef.set(<User>{ uid: user.uid, email: user.email });
+      }
+    })
   }
 
 }
